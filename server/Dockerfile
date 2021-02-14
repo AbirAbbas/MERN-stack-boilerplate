@@ -8,6 +8,7 @@ WORKDIR /home/node/app/
 # where available (npm@5+)
 COPY package*.json ./
 
+RUN npm install -g npm-install-changed
 RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
@@ -17,4 +18,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD [ "nodemon", "./src/index.js" ]
+CMD [ "nodemon", "./src/app.js" ]

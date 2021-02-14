@@ -8,19 +8,21 @@ services:
     image: node:latest
     container_name: nodejs
     restart: unless-stopped
+    env_file: .env
     ports:
       - '3000:3000'
     volumes:
       - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
+      - exclude:/home/node/app/node_modules
     networks:
       - app-network
-    command: ./scripts/docker/wait-for.sh db:27017 -- ./node_modules/.bin/nodemon ./src/index.js
+    command: ./scripts/docker/wait-for.sh db:27017 -- ./node_modules/.bin/nodemon ./src/app.js
 
   db:
-    image: mongo:4.2
+    image: mongo:4.4
     container_name: db
     restart: unless-stopped
+    env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
@@ -28,6 +30,8 @@ services:
       - database:/data/db
     networks:
       - app-network
+    logging:
+      driver: 'none'
 
 networks:
   app-network:
@@ -35,4 +39,4 @@ networks:
 
 volumes:
   database:
-  node_modules:
+  exclude:
