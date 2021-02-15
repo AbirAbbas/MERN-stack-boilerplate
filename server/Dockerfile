@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:14.15.5
 
 # Create app directory
 WORKDIR /home/node/app/
@@ -8,8 +8,8 @@ WORKDIR /home/node/app/
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install -g npm-install-changed
 RUN npm install
+
 # If you are building your code for production
 # RUN npm ci --only=production
 
@@ -18,4 +18,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD [ "nodemon", "./src/app.js" ]
+CMD [ "node", "./src/app.js" ]

@@ -13,7 +13,6 @@ services:
       - '3000:3000'
     volumes:
       - .:/home/node/app
-      - exclude:/home/node/app/node_modules
     networks:
       - app-network
     command: ./scripts/docker/wait-for.sh db:27017 -- ./node_modules/.bin/nodemon ./src/app.js
@@ -39,4 +38,3 @@ networks:
 
 volumes:
   database:
-  exclude:
